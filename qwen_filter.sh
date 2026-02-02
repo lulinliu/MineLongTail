@@ -2,7 +2,7 @@
 set -euo pipefail
 
 MODEL="/scratch/10102/hh29499/MineLongTail/hf_cahce/hub/models--Qwen--Qwen3-VL-32B-Instruct/snapshots/0cfaf48183f594c314753d30a4c4974bc75f3ccb"
-VIDS="/DATA2/lulin2/ood/PhysicalAI-Autonomous-Vehicles/camera/ALL_mp4_symlinks"
+VIDS="/scratch/10102/hh29499/MineLongTail/longtail/PhysicalAI-Autonomous-Vehicles/camera/camera_front_wide_120fov/videos"
 # Only long-tail outputs now; keep a fresh folder to avoid mixing with old lighting files
 OUT="/scratch/10102/hh29499/MineLongTail/qwen3vl_out_front_wide_split_longtail"
 

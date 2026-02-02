@@ -9,7 +9,7 @@
 
 set -euo pipefail
 
-ROOT_DIR="${1:-/scratch/10102/hh29499/longtail/PhysicalAI-Autonomous-Vehicles/camera/camera_front_wide_120fov}"
+ROOT_DIR="${1:-/scratch/10102/hh29499/MineLongTail/longtail/PhysicalAI-Autonomous-Vehicles/camera/camera_front_wide_120fov}"
 JOBS="${2:-16}"
 
 cd "$ROOT_DIR"

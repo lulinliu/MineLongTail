@@ -1,17 +1,18 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-MODEL="/DATA2/lulin2/hf_cache/hub/models--Qwen--Qwen3-VL-32B-Instruct/snapshots/0cfaf48183f594c314753d30a4c4974bc75f3ccb"
+MODEL="/scratch/10102/hh29499/MineLongTail/hf_cahce/hub/models--Qwen--Qwen3-VL-32B-Instruct/snapshots/0cfaf48183f594c314753d30a4c4974bc75f3ccb"
 VIDS="/DATA2/lulin2/ood/PhysicalAI-Autonomous-Vehicles/camera/ALL_mp4_symlinks"
 # Only long-tail outputs now; keep a fresh folder to avoid mixing with old lighting files
-OUT="/DATA2/lulin2/ood/qwen3vl_out_front_wide_split_longtail"
+OUT="/scratch/10102/hh29499/MineLongTail/qwen3vl_out_front_wide_split_longtail"
 
 mkdir -p "$OUT"
 
 # 可选：把控制台输出也保存一份 log
 LOG="$OUT/run_$(date +%Y%m%d_%H%M%S).log"
 
-torchrun --nproc_per_node=4 /DATA2/lulin2/ood/PhysicalAI-Autonomous-Vehicles/qwen_filter.py \
+# Use MineLongTail prompt (9-class taxonomy)
+torchrun --nproc_per_node=1 /DATA2/lulin2/ood/MineLongTail/qwen_filter.py \
   --model_path "$MODEL" \
   --video_dir "$VIDS" \
   --out_dir "$OUT" \

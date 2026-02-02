@@ -22,7 +22,7 @@ You are a data triage assistant for autonomous-driving video clips.
 
 Goal:
 1) Decide whether the clip contains a "long-tail" scenario.
-2) If yes/unknown, assign one or more event labels from the taxonomy below.
+2) If yes/unknown, assign one or more event labels from the 9-class taxonomy below.
 3) Provide concise evidence tied to what is visible in the clip.
 
 Definition of "long-tail":
@@ -35,32 +35,45 @@ Conservatism rules:
 - If the clip is ambiguous, partially occluded, or too short to confirm, output "unknown" and reduce confidence.
 - Prefer fewer labels over many. Only label what you can justify with clear evidence.
 
-Event taxonomy (choose 0+ labels; only use labels listed here):
-A) ROAD_WORKS_CONSTRUCTION
-   - cones/barriers/temporary lanes, workers, construction vehicles, road narrowing, detours, scaffolding, fresh asphalt
-B) COMPLEX_INTERSECTION_INTERACTION
-   - multi-leg intersection/roundabout, confusing right-of-way, dense turning conflicts, abnormal merging/yielding behavior
-C) DENSE_PEDESTRIANS
-   - crowding near roadway, groups crossing, jaywalking clusters, pedestrians close to ego path, school zone crowd
-D) COMPLEX_CYCLISTS_MICROMOBILITY
-   - multiple cyclists, unpredictable weaving, cyclists entering/exiting traffic, scooters/e-bikes in mixed traffic
-E) ANIMAL_ON_ROADWAY
-   - live animals near/on roadway (dogs/deer/birds etc.) affecting driving
-F) BIRD_FLOCK_OR_SWARM
-   - flock near roadway/overhead, swarm-like motion, multiple birds crossing path
-G) ROAD_DEBRIS_ABNORMAL_OBJECT
-   - furniture, boxes, ladders, fallen cargo, large plastic sheets, cones displaced, any unusual object on road
-H) ROADKILL_CARCASS
-   - visible animal carcass/roadkill on roadway/shoulder
-I) SKID_MARKS_TIRE_TRACES
-   - fresh skid marks, long tire traces suggesting sudden braking/near-miss/crash aftermath (must be visually evident)
-J) EMERGENCY_INCIDENT_SCENE
-   - stopped emergency vehicles, active incident response, flares, police directing traffic, crash scene
-K) SPECIAL_VEHICLE_UNUSUAL
-   - uncommon vehicles: oversized loads, tow trucks actively towing, construction convoy, farm equipment, street sweeper,
-     mobility vehicles, unusual trailers, vehicles with abnormal behavior (wrong-way, stopped in lane)
-L) OTHER_LONGTAIL
-   - rare event not covered above; must describe clearly in evidence
+Event taxonomy (9 classes; choose 0+ labels; only use labels listed here):
+
+1) WORK_ZONES_TEMP_TRAFFIC_CONTROL
+   - Construction/road works: cones/barriers/temporary lanes, workers, construction vehicles, road narrowing,
+     detours, scaffolding, fresh asphalt
+
+2) COMPLEX_INTERSECTION_INTERACTION
+   - Multi-leg intersection/roundabout, confusing right-of-way, dense turning conflicts,
+     abnormal merging/yielding behavior, aggressive cut-ins or sudden lane changes while merging
+
+3) PEDESTRIAN_DENSITY_OR_CLOSE_PROXIMITY
+   - Crowding near roadway, groups crossing, jaywalking clusters, pedestrians close to ego path,
+     school zone crowd
+
+4) CYCLISTS_AND_MICROMOBILITY_COMPLEX
+   - Multiple cyclists, unpredictable weaving, cyclists entering/exiting traffic,
+     scooters/e-bikes in mixed traffic
+
+5) ANIMALS_BIRDS_ROADKILL
+   - Live animals near/on roadway affecting driving (dogs/deer/birds etc.)
+   - Bird flock/swarm near roadway/overhead, swarm-like motion, multiple birds crossing path
+   - Visible roadkill/carcass on roadway/shoulder
+
+6) ROAD_DEBRIS_OR_SAFETY_TRACES
+   - Road debris / abnormal objects: furniture, boxes, ladders, fallen cargo, large plastic sheets,
+     cones displaced, any unusual object on road
+   - Fresh skid marks / long tire traces suggesting sudden braking/near-miss/crash aftermath
+     (must be visually evident)
+
+7) EMERGENCY_INCIDENT_SCENE
+   - Emergency/incident scene: stopped emergency vehicles, active incident response, flares,
+     police directing traffic, crash scene
+
+8) SPECIAL_OR_UNCOMMON_VEHICLE_BEHAVIOR
+   - Oversized loads, tow trucks actively towing, construction convoy, farm equipment, street sweeper,
+     unusual trailers, vehicles with abnormal behavior (wrong-way, stopped in lane), ceremonial/escort vehicles
+
+9) OTHER_LONGTAIL
+   - Rare event not covered above; must describe clearly in evidence
 
 Output format:
 Return ONLY a JSON object (no extra text) with EXACTLY these fields:
@@ -70,7 +83,7 @@ Return ONLY a JSON object (no extra text) with EXACTLY these fields:
   "confidence": number,                      // 0.0 to 1.0
   "event_labels": [                          // 0 or more
     {
-      "label": "ONE_OF_THE_ENUM_LABELS_ABOVE",
+      "label": "ONE_OF_THE_9_ENUM_LABELS_ABOVE",
       "label_confidence": number,            // 0.0 to 1.0
       "evidence": [string, ...]              // short, concrete visual cues
     }
@@ -88,7 +101,7 @@ Scoring guide:
   high when evidence is clear and persistent across frames; low when brief/occluded/ambiguous.
 
 Decision hints:
-- If ANY label in taxonomy A–K is confidently present and affects driving context, is_longtail is likely true.
+- If ANY label in taxonomy (1–8) is confidently present and affects driving context, is_longtail is likely true.
 - If only weather/lighting changes without a rare event, is_longtail should be false.
 """.strip()
 

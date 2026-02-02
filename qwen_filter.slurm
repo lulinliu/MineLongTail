@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -J qwen_filterFeb
 #SBATCH -A CGAI24022
-#SBATCH -p gh
+#SBATCH -p gh-dev
 #SBATCH -N 1                 # 节点数；按需改
 #SBATCH --ntasks-per-node=1   # 每节点只启动一个脚本，torchrun 再在节点内拉起多进程
 #SBATCH --gpus-per-node=1     # 每节点 GPU 数；与 qwen_filter.sh 里的 GPUS_PER_NODE 保持一致

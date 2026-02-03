@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH -J qwen_filterFeb
+#SBATCH -J qwen_filterFeb_02
 #SBATCH -A CGAI24022
 #SBATCH -p gh-dev
-#SBATCH -N 2                 # 节点数；按需改
+#SBATCH -N 16                 # 节点数；按需改
 #SBATCH --ntasks-per-node=1   # 每节点只启动一个脚本，torchrun 再在节点内拉起多进程
-#SBATCH -t 1:00:00
+#SBATCH -t 48:00:00
 #SBATCH -o /scratch/10102/hh29499/MineLongTail/%x_%j.out
 #SBATCH -e /scratch/10102/hh29499/MineLongTail/%x_%j.err
 

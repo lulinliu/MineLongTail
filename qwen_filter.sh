@@ -21,7 +21,7 @@ torchrun --nproc_per_node=1 \
   --node_rank=$NODE_RANK \
   --master_addr=$MASTER_ADDR \
   --master_port=$MASTER_PORT \
-  /DATA2/lulin2/ood/MineLongTail/qwen_filter.py \
+  qwen_filter.py \
   --model_path "$MODEL" \
   --video_dir "$VIDS" \
   --out_dir "$OUT" \

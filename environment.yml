@@ -83,4 +83,3 @@ dependencies:
   - zlib=1.2.13
   - zstandard=0.23.0
   - zstd=1.5.6
-prefix: /opt/conda
